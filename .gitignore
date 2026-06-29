@@ -25,3 +25,4 @@ composer.phar
 # Any local database config overrides or logs if created
 *.log
 generate_html.py
+make_contributions.py

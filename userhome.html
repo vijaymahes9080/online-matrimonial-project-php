@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -34,14 +36,12 @@ $(document).ready(function(){
     );
 });
 </script>
-<script src="js/mock_db.js"></script>
 </head>
 <body>
 <script>
     const user = checkLogin();
     if (user) {
         document.addEventListener("DOMContentLoaded", () => {
-            // Update links to include the current user ID
             document.querySelectorAll("a").forEach(a => {
                 if (a.href.includes("view_profile.html") || a.href.includes("create_profile.html") || a.href.includes("partner_preference.html") || a.href.includes("photouploader.html")) {
                     const url = new URL(a.href, window.location.href);
@@ -50,7 +50,6 @@ $(document).ready(function(){
                 }
             });
             
-            // Inject Welcome box
             const container = document.querySelector(".grid_3 .container");
             const welcomeDiv = document.createElement("div");
             welcomeDiv.className = "services";
@@ -129,14 +128,14 @@ $(document).ready(function(){
    	
    	  	<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 		        <ul class="nav navbar-nav nav_1">
-		            <li><a href="view_profile.html">View Profile</a></li>
-		            <li><a href="partner_preference.html">Partner Preference</a></li>
+		            <li><a href="view_profile.html?id=<span class="mock-data" data-prop="id"></span>">View Profile</a></li>
+		            <li><a href="partner_preference.html?id=<span class="mock-data" data-prop="id"></span>">Partner Preference</a></li>
 		    		<li class="dropdown">
 		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile<span class="caret"></span></a>
 		              <ul class="dropdown-menu" role="menu">
-		               <li><a href="photouploader.html">Upload Photos</a></li>
-		               <li><a href="view_profile.html">View Profile</a></li>
-		               <li><a href="create_profile.html">Edit Profile</a></li>  
+		               <li><a href="photouploader.html?id=<span class="mock-data" data-prop="id"></span>">Upload Photos</a></li>
+		               <li><a href="view_profile.html?id=<span class="mock-data" data-prop="id"></span>">View Profile</a></li>
+		               <li><a href="create_profile.html?id=<span class="mock-data" data-prop="id"></span>">Edit Profile</a></li>  
 		              </ul>
 		            </li>
 					<li class="dropdown">
@@ -153,7 +152,7 @@ $(document).ready(function(){
 </div>
 
 
-<?php include_once("footer.html")?>
+
 <!-- FlexSlider -->
 <script defer src="js/jquery.flexslider.js"></script>
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />

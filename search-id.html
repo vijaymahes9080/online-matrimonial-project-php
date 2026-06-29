@@ -1,15 +1,7 @@
 
 
-<?php if(isloggedin()){
- //do nothing stay here
-} else{
-   header("location:login.html");
-}
- ?>
-<?php
-$id=$_SESSION['id'];
-$result=search();
-?>
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -45,7 +37,6 @@ $(document).ready(function(){
     );
 });
 </script>
-<script src="js/mock_db.js"></script>
 </head>
 <body>
 <!-- ============================  Navigation Start =========================== -->
@@ -142,59 +133,7 @@ $(document).ready(function(){
  <div class="paid_people">
    <h1>Profiles</h1>
    <div class="row_1">
-<?php
-  //only start display profiles if and only if search is triggered
-  // if(isset($_POST['search'])){
 
-  // //code to print matching profiles
-
-  // // couloumn count
-
-  // $c_count = '1';
-
-  // while ($row = mysqli_fetch_assoc($result))
-  //   {
-  //     //getting photo for display
-  //     $profid=$row['id'];
-  //     $sql="SELECT * FROM photos WHERE cust_id=$profid";
-  //     $result2=mysqlexec($sql);
-  //     $photo=mysqli_fetch_assoc($result2);
-  //     $pic=$photo['pic1'];
-  //   // printing left side profile
-      
-  //   if ($c_count == '1')
-  //     {
-  //     echo "<div class=\"row_1\">"; //starting row
-  //     echo "<div class=\"col-sm-6 paid_people-left\">"; //left statrted
-  //     echo "<ul class=\"profile_item\">";
-  //     echo "<a href=\"view_profile.html?id=$profid\">";
-  //     echo "<li class=\"profile_item-img\"><img src=\"profile/". $profid."/".$pic ."\"" . "class=\"img-responsive\"" ;
-  //     echo "alt=\"\"/></li>";
-  //     echo "<li class=\"profile_item-desc\">";
-  //     echo "<h4>" . $row['firstname'] . " " . $row['lastname'] . "</h4>";
-  //     echo "<p>" . $row['age']. "Yrs," . $row['religion'] . "</p>";
-  //     echo "<h5>" . "View Full Profile" . "</h5>";
-  //     echo "</li>";
-  //     echo "</a>";
-  //     echo "</ul>";
-  //     echo "</div>"; //left end
-  //     $c_count++;
-  //     }
-  //     else
-  //     {
-  //     echo "<div class=\"col-sm-6\">"; //right statrted
-      
-  //     echo "</div>"; //right end
-
-  //     // end of right side
-
-      
-  //     $c_count = '1';
-  //     }
-  //   } //loop end
-  //   echo "</div>"; //row end
-  // }//end of if
-?>
 	
   <div class="col-sm-6">
 	 	
@@ -204,7 +143,57 @@ $(document).ready(function(){
   </div>
 </div>
 <div class="col-md-3 match_right">
-	<?php include_once("matchright.html");?>	
+	<section class="slider">
+	 <h3>Happy Marriage</h3>
+	 <div class="flexslider">
+		<ul class="slides">
+		  <li>
+			<img src="images/s2.jpg" alt=""/>
+			<h4>Jhon & Mary</h4>
+			<p>It is a long established fact that a reader will be distracted by the readable</p>
+		  </li>
+		  <li>
+			<img src="images/s1.jpg" alt=""/>
+			<h4>Annie & Williams</h4>
+			<p>It is a long established fact that a reader will be distracted by the readable</p>
+		  </li>
+		  <li>
+			<img src="images/s3.jpg" alt=""/>
+			<h4>Ram & Isha</h4>
+			<p>It is a long established fact that a reader will be distracted by the readable</p>
+		  </li>
+	    </ul>
+	  </div>
+   </section>
+   <div class="view_profile view_profile2">
+        <h3>View Recent Profiles</h3>
+        <div id="recentProfilesContainer"></div>
+   </div>
+   <script>
+   document.addEventListener("DOMContentLoaded", () => {
+       const profiles = getProfiles();
+       const sorted = [...profiles].sort((a, b) => new Date(b.profilecreationdate) - new Date(a.profilecreationdate));
+       const container = document.getElementById("recentProfilesContainer");
+       if (container) {
+           let html = "";
+           sorted.slice(0, 3).forEach(p => {
+               html += `
+                   <ul class="profile_item">
+                       <a href="view_profile.html?id=${p.id}">
+                           <li class="profile_item-img"><img src="${p.pic || 'profile/6/user.png'}" class="img-responsive" alt="" style="height: 60px; object-fit: cover; width: 60px; border-radius: 50%;"/></li>
+                           <li class="profile_item-desc">
+                               <h4>${p.firstname} ${p.lastname}</h4>
+                               <p>${p.age} Yrs, ${p.religion}</p>
+                               <h5>View Full Profile</h5>
+                           </li>
+                       </a>
+                   </ul>
+               `;
+           });
+           container.innerHTML = html;
+       }
+   });
+   </script>	
 </div>
      <div class="clearfix"> </div>
   </div>

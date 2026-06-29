@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -34,7 +37,6 @@ $(document).ready(function(){
     );
 });
 </script>
-<script src="js/mock_db.js"></script>
 </head>
 <body>
 <script>
@@ -54,18 +56,35 @@ $(document).ready(function(){
             return;
         }
         
-        // Populate values dynamically
+        // Populate text details
         document.querySelectorAll(".mock-data").forEach(span => {
             const prop = span.getAttribute("data-prop");
-            if (prop === "fullname") {
-                span.innerText = p.firstname + " " + p.lastname;
-            } else {
-                span.innerText = p[prop] || "Not Specified";
-            }
+            const propMap = {
+                "fullname": p.firstname + " " + p.lastname,
+                "fname": p.firstname,
+                "lname": p.lastname,
+                "bodytype": p.body_type,
+                "physicalstatus": p.physical_status,
+                "profileby": p.profilecreatedby,
+                "edudescr": p.education_sub,
+                "mothertounge": p.mothertounge,
+                "bloodgroup": p.blood_group,
+                "occupationdescr": p.occupation_descr,
+                "fatheroccupation": p.fathers_occupation,
+                "motheroccupation": p.mothers_occupation,
+                "income": p.annual_income,
+                "bros": p.no_bro,
+                "sis": p.no_sis,
+                "profileid": p.cust_id,
+                "pic1": p.pic || "profile/6/user.png",
+                "pic2": p.pic || "profile/6/user.png",
+                "pic3": p.pic || "profile/6/user.png",
+                "pic4": p.pic || "profile/6/user.png"
+            };
+            const val = propMap.hasOwnProperty(prop) ? propMap[prop] : p[prop];
+            span.innerText = val !== undefined ? val : "Not Specified";
         });
         
-        // Fill out remaining details by searching page contents for placeholders or doing direct DOM replacement
-        // Let's replace the whole table contents or write values directly:
         const mappings = {
             "First Name": p.firstname,
             "Last Name": p.lastname,
@@ -95,7 +114,7 @@ $(document).ready(function(){
             "Sisters": p.no_sis || "0"
         };
         
-        // Populate photos
+        // Populate slider photos
         const pics = [p.pic || "profile/6/user.png", p.pic || "profile/6/user.png", p.pic || "profile/6/user.png", p.pic || "profile/6/user.png"];
         const slides = document.querySelectorAll(".slides li");
         slides.forEach((li, idx) => {
@@ -106,7 +125,7 @@ $(document).ready(function(){
             }
         });
         
-        // Populate table td containing dynamic text
+        // Populate static details table
         document.querySelectorAll("td").forEach(td => {
             const text = td.innerText.trim();
             for (const [key, val] of Object.entries(mappings)) {
@@ -177,22 +196,22 @@ $(document).ready(function(){
    </div>
    <div class="profile">
    	 <div class="col-md-8 profile_left">
-   	 	<h2>Profile Id : <?php echo $profileid;?></h2>
+   	 	<h2>Profile Id : <span class="mock-data" data-prop="profileid"></span></h2>
    	 	<div class="col_3">
    	        <div class="col-sm-4 row_2">
 				<div class="flexslider">
 					 <ul class="slides">
-						<li data-thumb="profile/<?php echo $profileid;?>/<?php echo $pic1;?>">
-							<img src="profile/<?php echo $profileid;?>/<?php echo $pic1;?>" />
+						<li data-thumb="profile/<span class="mock-data" data-prop="profileid"></span>/<span class="mock-data" data-prop="pic1"></span>">
+							<img src="profile/<span class="mock-data" data-prop="profileid"></span>/<span class="mock-data" data-prop="pic1"></span>" />
 						</li>
-						<li data-thumb="profile/<?php echo $profileid;?>/<?php echo $pic2;?>">
-							<img src="profile/<?php echo $profileid;?>/<?php echo $pic2;?>" />
+						<li data-thumb="profile/<span class="mock-data" data-prop="profileid"></span>/<span class="mock-data" data-prop="pic2"></span>">
+							<img src="profile/<span class="mock-data" data-prop="profileid"></span>/<span class="mock-data" data-prop="pic2"></span>" />
 						</li>
-						<li data-thumb="profile/<?php echo $profileid;?>/<?php echo $pic3;?>">
-							<img src="profile/<?php echo $profileid;?>/<?php echo $pic3;?>" />
+						<li data-thumb="profile/<span class="mock-data" data-prop="profileid"></span>/<span class="mock-data" data-prop="pic3"></span>">
+							<img src="profile/<span class="mock-data" data-prop="profileid"></span>/<span class="mock-data" data-prop="pic3"></span>" />
 						</li>
-						<li data-thumb="profile/<?php echo $profileid;?>/<?php echo $pic4;?>">
-							<img src="profile/<?php echo $profileid;?>/<?php echo $pic4;?>" />
+						<li data-thumb="profile/<span class="mock-data" data-prop="profileid"></span>/<span class="mock-data" data-prop="pic4"></span>">
+							<img src="profile/<span class="mock-data" data-prop="profileid"></span>/<span class="mock-data" data-prop="pic4"></span>" />
 						</li>
 					 </ul>
 				  </div>
@@ -202,10 +221,10 @@ $(document).ready(function(){
 		        	<tbody>
 		        		<tr class="opened_1">
 							<td class="day_label">Name :</td>
-							<td class="day_value"><span class="mock-data" data-prop="fullname"></span></td>
+							<td class="day_value"></td>
 						</tr><tr class="opened_1">
 							<td class="day_label">Age / Height :</td>
-							<td class="day_value"><span class="mock-data" data-prop="age"></span> Years / <span class="mock-data" data-prop="height"></span> Cm </td>
+							<td class="day_value">/ </td>
 						</tr>
 					  	<tr class="opened">
 							<td class="day_label">Religion :</td>
@@ -221,7 +240,7 @@ $(document).ready(function(){
 						</tr>
 					    <tr class="closed">
 							<td class="day_label">Profile Created by :</td>
-							<td class="day_value closed"><span><span class="mock-data" data-prop="profilecreatedby"></span></span></td>
+							<td class="day_value closed"><span><span class="mock-data" data-prop="profileby"></span></span></td>
 						</tr>
 					    <tr class="closed">
 							<td class="day_label">Education :</td>
@@ -252,7 +271,7 @@ $(document).ready(function(){
 				        	<tbody>
 				        		<tr class="opened_1">
 									<td class="day_label">Name :</td>
-									<td class="day_value"><span class="mock-data" data-prop="fullname"></span></td>
+									<td class="day_value"></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Marital Status :</td>
@@ -260,24 +279,24 @@ $(document).ready(function(){
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Body Type :</td>
-									<td class="day_value"><?php echo $bodytype;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="bodytype"></span></td>
 								</tr>
 							    
 							    <tr class="opened">
 									<td class="day_label">Age / Height :</td>
-									<td class="day_value"><?php echo $age; ?>/<?php echo $height;?> cm</td>
+									<td class="day_value"><span class="mock-data" data-prop="age"></span>/<span class="mock-data" data-prop="height"></span> cm</td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Physical Status :</td>
-									<td class="day_value closed"><span><?php echo $physicalstatus;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="physicalstatus"></span></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Profile Created by :</td>
-									<td class="day_value closed"><span><span class="mock-data" data-prop="profilecreatedby"></span></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="profileby"></span></span></td>
 								</tr>
 								<tr class="opened">
 									<td class="day_label">Drink :</td>
-									<td class="day_value closed"><span><?php echo $drink;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="drink"></span></span></td>
 								</tr>
 						    </tbody>
 				          </table>
@@ -287,31 +306,31 @@ $(document).ready(function(){
 				        	<tbody>
 				        		<tr class="opened_1">
 									<td class="day_label">Age :</td>
-									<td class="day_value"><?php echo $age;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="age"></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Mother Tongue :</td>
-									<td class="day_value"><?php echo $mothertounge;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="mothertounge"></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Complexion :</td>
-									<td class="day_value"><?php echo $colour;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="colour"></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Weight :</td>
-									<td class="day_value"><?php echo $weight;?> KG</td>
+									<td class="day_value"><span class="mock-data" data-prop="weight"></span> KG</td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Blood Group :</td>
-									<td class="day_value"><?php echo $bloodgroup;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="bloodgroup"></span></td>
 								</tr>
 							    <tr class="closed">
 									<td class="day_label">Diet :</td>
-									<td class="day_value closed"><span><?php echo $diet;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="diet"></span></span></td>
 								</tr>
 							    <tr class="closed">
 									<td class="day_label">Smoke :</td>
-									<td class="day_value closed"><span><?php echo $smoke;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="smoke"></span></span></td>
 								</tr>
 						    </tbody>
 				        </table>
@@ -325,12 +344,12 @@ $(document).ready(function(){
 				        	<tbody>
 				        		<tr class="opened">
 									<td class="day_label">Caste :</td>
-									<td class="day_value"><?php echo $caste;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="caste"></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">
  of Birth :</td>
-									<td class="day_value closed"><span><?php echo $dob;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="dob"></span></span></td>
 								</tr>
 							</tbody>
 				          </table>
@@ -344,7 +363,7 @@ $(document).ready(function(){
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Sub Caste :</td>
-									<td class="day_value"><?php echo $subcaste;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="subcaste"></span></td>
 								</tr>
 							    
 							</tbody>
@@ -363,15 +382,15 @@ $(document).ready(function(){
 								</tr>
 				        		<tr class="opened">
 									<td class="day_label">Education Detail :</td>
-									<td class="day_value"><?php echo $edudescr;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="edudescr"></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Occupation Detail :</td>
-									<td class="day_value closed"><span><?php echo $occupationdescr;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="occupationdescr"></span></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Annual Income :</td>
-									<td class="day_value closed"><span><?php echo $income;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="income"></span></span></td>
 								</tr>
 							 </tbody>
 				          </table>
@@ -389,19 +408,19 @@ $(document).ready(function(){
 				        	<tbody>
 				        		<tr class="opened">
 									<td class="day_label">Father's Occupation :</td>
-									<td class="day_value"><?php echo $fatheroccupation;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="fatheroccupation"></span></td>
 								</tr>
 				        		<tr class="opened">
 									<td class="day_label">Mother's Occupation :</td>
-									<td class="day_value"><?php echo $motheroccupation;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="motheroccupation"></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">No. of Brothers :</td>
-									<td class="day_value closed"><span><?php echo $bros;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="bros"></span></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">No. of Sisters :</td>
-									<td class="day_value closed"><span><?php echo $sis;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="sis"></span></span></td>
 								</tr>
 							 </tbody>
 				          </table>
@@ -410,29 +429,7 @@ $(document).ready(function(){
 				    </div>
 				 </div>
 
-<?php
-//getting partner prefernce
-$sql = "SELECT * FROM partnerprefs WHERE custId = $id";
-$result = mysqlexec($sql);
-$row= mysqli_fetch_assoc($result);
 
-$agemin=$row['agemin'];
-$agemax=$row['agemax'];
-$maritalstatus=$row['maritalstatus'];
-$complexion=$row['complexion'];
-$height=$row['height'];
-$diet=$row['diet'];
-$religion=$row['religion'];
-$caste=$row['caste'];
-$mothertounge=$row['mothertounge'];
-$education=$row['education'];
-$occupation=$row['occupation'];
-$country=$row['country'];
-$descr=$row['descr'];
-
-
-
-?>
 				 <div role="tabpanel" class="tab-pane fade" id="profile1" aria-labelledby="profile-tab1">
 				    <div class="basic_1 basic_2">
 				       <div class="basic_1-left">
@@ -440,7 +437,7 @@ $descr=$row['descr'];
 				        	<tbody>
 				        		<tr class="opened">
 									<td class="day_label">Age   :</td>
-									<td class="day_value"><?php echo $agemin . " to " . $agemax;?></td>
+									<td class="day_value"><span class="mock-data" data-prop="agemin"></span> to <span class="mock-data" data-prop="agemax"></span></td>
 								</tr>
 				        		<tr class="opened">
 									<td class="day_label">Marital Status :</td>
@@ -448,19 +445,19 @@ $descr=$row['descr'];
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Body Type :</td>
-									<td class="day_value closed"><span><?php echo $bodytype;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="bodytype"></span></span></td>
 								</tr>
 							    <tr class="opened">
 									<td class="day_label">Complexion :</td>
-									<td class="day_value closed"><span><?php echo $colour;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="colour"></span></span></td>
 								</tr>
 								<tr class="opened">
 									<td class="day_label">Height:</td>
-									<td class="day_value closed"><span><?php echo $height;?> Cm</span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="height"></span> Cm</span></td>
 								</tr>
 								<tr class="opened">
 									<td class="day_label">Diet :</td>
-									<td class="day_value closed"><span><?php echo $diet;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="diet"></span></span></td>
 								</tr>
 								<tr class="opened">
 									<td class="day_label">Religion :</td>
@@ -468,11 +465,11 @@ $descr=$row['descr'];
 								</tr>
 								<tr class="opened">
 									<td class="day_label">Caste :</td>
-									<td class="day_value closed"><span><?php echo $caste;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="caste"></span></span></td>
 								</tr>
 								<tr class="opened">
 									<td class="day_label">Mother Tongue :</td>
-									<td class="day_value closed"><span><?php echo $mothertounge;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="mothertounge"></span></span></td>
 								</tr>
 								<tr class="opened">
 									<td class="day_label">Education :</td>
@@ -480,7 +477,7 @@ $descr=$row['descr'];
 								</tr>
 								<tr class="opened">
 									<td class="day_label">Occupation :</td>
-									<td class="day_value closed"><span><?php echo $occupation;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="occupation"></span></span></td>
 								</tr>
 								<tr class="opened">
 									<td class="day_label">Country of Residence :</td>
@@ -488,7 +485,7 @@ $descr=$row['descr'];
 								</tr>
 								<tr class="opened">
 									<td class="day_label">State :</td>
-									<td class="day_value closed"><span><?php echo $state;?></span></td>
+									<td class="day_value closed"><span><span class="mock-data" data-prop="state"></span></span></td>
 								</tr>
 								
 							 </tbody>
@@ -509,30 +506,7 @@ $descr=$row['descr'];
         </div> -->
         <div class="view_profile view_profile2">
         	<h3>View Recent Profiles</h3>
-    <?php
-     $sql="SELECT * FROM customer ORDER BY profilecreationdate ASC";
-      $result=mysqlexec($sql);
-      $count=1;
-      while($row=mysqli_fetch_assoc($result)){
-            $profid=$row['cust_id'];
-          //getting photo
-          $sql="SELECT * FROM photos WHERE cust_id=$profid";
-          $result2=mysqlexec($sql);
-          $photo=mysqli_fetch_assoc($result2);
-          $pic=$photo['pic1'];
-          echo "<ul class=\"profile_item\">";
-            echo"<a href=\"view_profile.html?id={$profid}\">";
-              echo "<li class=\"profile_item-img\"><img src=\"profile/". $profid."/".$pic ."\"" . "class=\"img-responsive\" alt=\"\"/></li>";
-               echo "<li class=\"profile_item-desc\">";
-                  echo "<h4>" . $row['firstname'] . " " . $row['lastname'] . "</h4>";
-                  echo "<p>" . $row['age']. "Yrs," . $row['religion'] . "</p>";
-                  echo "<h5>" . "View Full Profile" . "</h5>";
-               echo "</li>";
-      echo "</a>";
-      echo "</ul>";
-      $count++;
-      }
-     ?>
+    
            
 </div>
        

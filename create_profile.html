@@ -1,12 +1,7 @@
 
 
 
-<?php
-$id=$_SESSION['id'];
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		processprofile_form($id);
-}
-?>
+
 
 
 <!DOCTYPE HTML>
@@ -44,7 +39,6 @@ $(document).ready(function(){
     );
 });
 </script>
-<script src="js/mock_db.js"></script>
 </head>
 <body>
 <!-- ============================  Navigation Start =========================== -->
@@ -563,7 +557,6 @@ $(document).ready(function(){
         
         const p = getProfile(user.id);
         if (p) {
-            // Pre-fill form inputs
             const inputs = {
                 "fname": p.firstname,
                 "lname": p.lastname,
@@ -601,9 +594,7 @@ $(document).ready(function(){
             for (const [name, val] of Object.entries(inputs)) {
                 const el = document.querySelector(`[name="${name}"]`);
                 if (el) {
-                    if (el.tagName === "SELECT" || el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
-                        el.value = val || "";
-                    }
+                    el.value = val || "";
                 }
             }
         }
@@ -611,10 +602,7 @@ $(document).ready(function(){
         const form = document.getElementById("profileForm");
         form.addEventListener("submit", (e) => {
             e.preventDefault();
-            const formData = new FormData(form);
             const data = {};
-            
-            // Map form names to profile properties
             const fieldMapping = {
                 "fname": "firstname",
                 "lname": "lastname",

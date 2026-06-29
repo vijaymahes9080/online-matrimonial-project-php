@@ -1,16 +1,7 @@
 
 
-<?php 
-if(isloggedin()){
- //do nothing stay here
-} else{
-   header("location:login.html");
-}
 
-?>
-<?php
-$result=search();
-?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -46,7 +37,6 @@ $(document).ready(function(){
     );
 });
 </script>
-<script src="js/mock_db.js"></script>
 </head>
 <body>
 <!-- ============================  Navigation Start =========================== -->
@@ -116,7 +106,7 @@ $(document).ready(function(){
    <div class="form_but1">
 	<label class="col-sm-5 control-lable1" for="sex">Gender : </label>
 	<div class="col-sm-7 form_radios">
-		<input type="radio" class="radio_1" name="sex" value="male" <?php echo "checked";?>/> Groom &nbsp;&nbsp;
+		<input type="radio" class="radio_1" name="sex" value="male" checked/> Groom &nbsp;&nbsp;
 		<input type="radio" class="radio_1" name="sex" value="female"/> Bride
 		
 		<!--<hr />
@@ -128,7 +118,7 @@ $(document).ready(function(){
   <div class="form_but1">
 	<label class="col-sm-5 control-lable1" for="Marital Status">Marital Status : </label>
 	<div class="col-sm-7 form_radios">
-		<input type="checkbox" class="radio_1" name="maritalstatus" value="Single" <?php echo "checked" ?>/> Single &nbsp;&nbsp;
+		<input type="checkbox" class="radio_1" name="maritalstatus" value="Single" checked/> Single &nbsp;&nbsp;
 		<input type="checkbox" class="radio_1" name="maritalstatus" value="divorced" /> Divorced &nbsp;&nbsp;
 		<input type="checkbox" class="radio_1" name="maritalstatus" value="widowed" /> Widowed &nbsp;&nbsp;
 		<input type="checkbox" class="radio_1" name="maritalstatus" value="seperated"/> Separated &nbsp;&nbsp;
@@ -268,7 +258,57 @@ $(document).ready(function(){
 </div>
 <!-- Match Right Starts -->
 <div class="col-md-3 match_right">
-  <?php include_once("matchright.html");?>
+  <section class="slider">
+	 <h3>Happy Marriage</h3>
+	 <div class="flexslider">
+		<ul class="slides">
+		  <li>
+			<img src="images/s2.jpg" alt=""/>
+			<h4>Jhon & Mary</h4>
+			<p>It is a long established fact that a reader will be distracted by the readable</p>
+		  </li>
+		  <li>
+			<img src="images/s1.jpg" alt=""/>
+			<h4>Annie & Williams</h4>
+			<p>It is a long established fact that a reader will be distracted by the readable</p>
+		  </li>
+		  <li>
+			<img src="images/s3.jpg" alt=""/>
+			<h4>Ram & Isha</h4>
+			<p>It is a long established fact that a reader will be distracted by the readable</p>
+		  </li>
+	    </ul>
+	  </div>
+   </section>
+   <div class="view_profile view_profile2">
+        <h3>View Recent Profiles</h3>
+        <div id="recentProfilesContainer"></div>
+   </div>
+   <script>
+   document.addEventListener("DOMContentLoaded", () => {
+       const profiles = getProfiles();
+       const sorted = [...profiles].sort((a, b) => new Date(b.profilecreationdate) - new Date(a.profilecreationdate));
+       const container = document.getElementById("recentProfilesContainer");
+       if (container) {
+           let html = "";
+           sorted.slice(0, 3).forEach(p => {
+               html += `
+                   <ul class="profile_item">
+                       <a href="view_profile.html?id=${p.id}">
+                           <li class="profile_item-img"><img src="${p.pic || 'profile/6/user.png'}" class="img-responsive" alt="" style="height: 60px; object-fit: cover; width: 60px; border-radius: 50%;"/></li>
+                           <li class="profile_item-desc">
+                               <h4>${p.firstname} ${p.lastname}</h4>
+                               <p>${p.age} Yrs, ${p.religion}</p>
+                               <h5>View Full Profile</h5>
+                           </li>
+                       </a>
+                   </ul>
+               `;
+           });
+           container.innerHTML = html;
+       }
+   });
+   </script>
 </div>
 <!-- Match Right ends -->
      <div class="clearfix"> </div>
@@ -317,14 +357,13 @@ $(document).ready(function(){
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         checkLogin();
-        
-        // Show all profiles by default
         renderResults(getProfiles());
         
         const form = document.getElementById("searchForm");
         form.addEventListener("submit", (e) => {
             e.preventDefault();
-            const sex = document.querySelector('input[name="sex"]:checked')?.value;
+            const sexVal = document.querySelector('input[name="sex"]:checked')?.value;
+            const sex = sexVal === "male" ? "Male" : (sexVal === "female" ? "Female" : null);
             
             const maritalstatus = document.querySelector('input[name="maritalstatus"]:checked')?.value || "any";
             const religion = document.querySelector('select[name="religion"]')?.value || "any";
@@ -408,14 +447,13 @@ $(window).load(function() {
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         checkLogin();
-        
-        // Show all profiles by default
         renderResults(getProfiles());
         
         const form = document.getElementById("searchForm");
         form.addEventListener("submit", (e) => {
             e.preventDefault();
-            const sex = document.querySelector('input[name="sex"]:checked')?.value;
+            const sexVal = document.querySelector('input[name="sex"]:checked')?.value;
+            const sex = sexVal === "male" ? "Male" : (sexVal === "female" ? "Female" : null);
             
             const maritalstatus = document.querySelector('input[name="maritalstatus"]:checked')?.value || "any";
             const religion = document.querySelector('select[name="religion"]')?.value || "any";

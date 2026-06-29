@@ -1,0 +1,170 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Find Your Perfect Partner - Matrimony
+ | User Home :: Matrimony
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="css/bootstrap-3.1.1.min.css" rel='stylesheet' type='text/css' />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- Custom Theme files -->
+<link href="css/style.css" rel='stylesheet' type='text/css' />
+<link href='//fonts.googleapis.com/css?family=Oswald:300,400,700' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+<!--font-Awesome-->
+<link href="css/font-awesome.css" rel="stylesheet"> 
+<!--font-Awesome-->
+<script>
+$(document).ready(function(){
+    $(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+            $(this).toggleClass('open');        
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+            $(this).toggleClass('open');       
+        }
+    );
+});
+</script>
+<script src="js/mock_db.js"></script>
+</head>
+<body>
+<script>
+    const user = checkLogin();
+    if (user) {
+        document.addEventListener("DOMContentLoaded", () => {
+            // Update links to include the current user ID
+            document.querySelectorAll("a").forEach(a => {
+                if (a.href.includes("view_profile.html") || a.href.includes("create_profile.html") || a.href.includes("partner_preference.html") || a.href.includes("photouploader.html")) {
+                    const url = new URL(a.href, window.location.href);
+                    url.searchParams.set("id", user.id);
+                    a.href = url.pathname + url.search;
+                }
+            });
+            
+            // Inject Welcome box
+            const container = document.querySelector(".grid_3 .container");
+            const welcomeDiv = document.createElement("div");
+            welcomeDiv.className = "services";
+            welcomeDiv.style.textAlign = "center";
+            welcomeDiv.style.padding = "40px";
+            welcomeDiv.innerHTML = `
+                <h2>Welcome, ${user.name}!</h2>
+                <p style="margin-top: 15px; font-size: 16px;">
+                    Your matrimonial profile is fully configured. You can use the menu below or the navigation options to search for matching partners, edit your details, and configure your partner preferences.
+                </p>
+                <div style="margin-top: 25px;">
+                    <a href="view_profile.html?id=${user.id}" class="btn btn-primary" style="background-color: #c32143; border: none; padding: 10px 20px;">View My Profile</a>
+                    <a href="create_profile.html?id=${user.id}" class="btn btn-default" style="padding: 10px 20px; margin-left: 10px;">Edit My Profile</a>
+                </div>
+            `;
+            container.appendChild(welcomeDiv);
+        });
+    }
+    </script>
+    
+<!-- ============================  Navigation Start =========================== -->
+ <!-- ============================  Navigation Start =========================== -->
+ <div class="navbar navbar-inverse-blue navbar">
+      <div class="navbar-inner navbar-inner_1">
+        <div class="container">
+           <div class="navigation">
+             <nav id="colorNav">
+               <!-- Managed dynamically by mock_db.js -->
+             </nav>
+           </div>
+           <a class="brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
+           <div class="pull-right">
+          	<nav class="navbar nav_bottom" role="navigation">
+		      <div class="navbar-header nav_2">
+		          <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">Menu
+		            <span class="sr-only">Toggle navigation</span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		          </button>
+		          <a class="navbar-brand" href="#"></a>
+		       </div> 
+		        <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+		            <ul class="nav navbar-nav nav_1">
+		                <li><a href="index.html">Home</a></li>
+		                <li><a href="about.html">About</a></li>
+						<li class="dropdown">
+		                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search<span class="caret"></span></a>
+		                  <ul class="dropdown-menu" role="menu">
+		                    <li><a href="search.html">Regular Search</a></li>
+		                    <li><a href="search-id.html">Search By Profile ID</a></li>
+		                    <li><a href="faq.html">Faq</a></li>
+		                  </ul>
+		                </li>
+		                <li class="last"><a href="contact.html">Contacts</a></li>
+		            </ul>
+		         </div>
+		    </nav>
+		   </div>
+          <div class="clearfix"> </div>
+        </div>
+      </div>
+    </div>
+<!-- ============================  Navigation End ============================ -->
+<!-- ============================  Navigation End ============================ -->
+<div class="grid_3">
+  <div class="container">
+   <div class="breadcrumb1">
+     <ul>
+        <a href="index.html"><i class="fa fa-home home_1"></i></a>
+        <span class="divider">&nbsp;|&nbsp;</span>
+        <li class="current-page">User Home</li>
+     </ul>
+   </div>
+   <div class="navigation" style="background-color: #ccc;"><!-- Innernavigation starts -->
+   	
+   	  	<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+		        <ul class="nav navbar-nav nav_1">
+		            <li><a href="view_profile.html">View Profile</a></li>
+		            <li><a href="partner_preference.html">Partner Preference</a></li>
+		    		<li class="dropdown">
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile<span class="caret"></span></a>
+		              <ul class="dropdown-menu" role="menu">
+		               <li><a href="photouploader.html">Upload Photos</a></li>
+		               <li><a href="view_profile.html">View Profile</a></li>
+		               <li><a href="create_profile.html">Edit Profile</a></li>  
+		              </ul>
+		            </li>
+					<li class="dropdown">
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search<span class="caret"></span></a>
+		              <ul class="dropdown-menu" role="menu">
+		                <li><a href="search.html">Regular Search</a></li>
+		                <li><a href="faq.html">Faq</a></li>
+		              </ul>
+		            </li>
+		        </ul>
+		</div>
+   </div><!-- End of inner navigation -->
+   </div>
+</div>
+
+
+<?php include_once("footer.html")?>
+<!-- FlexSlider -->
+<script defer src="js/jquery.flexslider.js"></script>
+<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
+<script>
+// Can also be used with $(document).ready()
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide",
+    controlNav: "thumbnails"
+  });
+});
+</script>   
+</body>
+</html>	

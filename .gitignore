@@ -24,3 +24,4 @@ composer.phar
 # Project specific ignores
 # Any local database config overrides or logs if created
 *.log
+generate_html.py
